@@ -6,11 +6,14 @@ package ome.io.nio.utests;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
-import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+
+import com.google.common.io.MoreFiles;
+
 import ome.io.nio.PixelsService;
 
 public class HelperUnitTest {
@@ -28,7 +31,7 @@ public class HelperUnitTest {
 
     @AfterClass
     public void tearDown() throws IOException {
-        FileUtils.deleteDirectory(new File(ROOT));
+        MoreFiles.deleteRecursively(Paths.get(ROOT));
     }
 
     //
