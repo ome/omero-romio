@@ -6,9 +6,9 @@
 package ome.io.nio;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.Formatter;
 
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +79,7 @@ public class AbstractFileSystemService {
      * @return the path relative to the root
      */
     public String getPixelsDirectory() {
-        return FilenameUtils.concat(root, PIXELS_PATH);
+        return Paths.get(root, PIXELS_PATH).toString();
     }
 
     /**
@@ -138,6 +138,6 @@ public class AbstractFileSystemService {
                 }
             }
         }
-        return FilenameUtils.concat(root, prefix + suffix + id);
+        return Paths.get(root, prefix + suffix + id).toString();
     }
 }
