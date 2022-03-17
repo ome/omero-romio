@@ -568,17 +568,28 @@ public class BfPixelBuffer implements PixelBuffer, Serializable {
                              bfReader.getOptimalTileHeight());
     }
 
+    /* @see ome.io.nio.PixelBuffer#getResolutionDescriptions() */
     public List<List<Integer>> getResolutionDescriptions()
     {
         final List<List<Integer>> rv = new ArrayList<List<Integer>>();
-        final int no = bfReader.getResolutionCount();
-        final List<CoreMetadata> cms = bfReader.getCoreMetadataList();
-        for (int i = 0; i < no; i++)
+        final int no = getResolutionLevels();
+        // no need to retrieve all CoreMetadata objects
+        // if there is only one resolution
+        // this can be faster for plates
+        if (no == 1)
         {
-            int coreIndex = bfReader.seriesToCoreIndex(bfReader.getSeries()) + i;
-            CoreMetadata cm = cms.get(coreIndex);
-            List<Integer> sizes = Arrays.asList(cm.sizeX, cm.sizeY);
-            rv.add(sizes);
+            rv.add(Arrays.asList(bfReader.getSizeX(), bfReader.getSizeY()));
+        }
+        else
+        {
+            final List<CoreMetadata> cms = bfReader.getCoreMetadataList();
+            int coreIndex = bfReader.getCoreIndex();
+            for (int i = 0 i < no; i++)
+            {
+                CoreMetadata cm = cms.get(coreIndex + i);
+                List<Integer> sizes = Arrays.asList(cm.sizeX, cm.sizeY);
+                rv.add(sizes);
+            }
         }
         return rv;
     }
