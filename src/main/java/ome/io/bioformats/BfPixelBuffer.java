@@ -20,6 +20,7 @@ import loci.formats.CoreMetadata;
 import loci.formats.FormatException;
 import loci.formats.FormatTools;
 import loci.formats.IFormatReader;
+import loci.formats.ReaderWrapper;
 import ome.conditions.ResourceError;
 import ome.io.nio.DimensionsOutOfBoundsException;
 import ome.io.nio.PixelBuffer;
@@ -582,9 +583,23 @@ public class BfPixelBuffer implements PixelBuffer, Serializable {
         }
         else
         {
-            final List<CoreMetadata> cms = bfReader.getCoreMetadataList();
+            // reader wrappers clone CoreMetadata objects
+            // during calls to getCoreMetadataList
+            // unwrap() prevents cloning, and should be safe since
+            // wrappers do not alter resolutions or XY dimensions
+            List<CoreMetadata> cms = null;
+            if (bfReader instanceof ReaderWrapper) {
+                try {
+                    cms = ((ReaderWrapper) bfReader).unwrap().getCoreMetadataList();
+                } catch (FormatException | IOException e) {
+                    log.trace("Could not unwrap bfReader", e);
+                }
+            }
+            if (cms == null) {
+                cms = bfReader.getCoreMetadataList();
+            }
             int coreIndex = bfReader.getCoreIndex();
-            for (int i = 0 i < no; i++)
+            for (int i = 0; i < no; i++)
             {
                 CoreMetadata cm = cms.get(coreIndex + i);
                 List<Integer> sizes = Arrays.asList(cm.sizeX, cm.sizeY);
