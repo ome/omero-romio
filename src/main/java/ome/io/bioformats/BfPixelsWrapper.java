@@ -350,6 +350,11 @@ public class BfPixelsWrapper {
         return reader.openBytes(reader.getIndex(z, c, t), buffer, x, y, w, h);
     }
 
+    public byte[] getTile(int z, int t, int x, int y, int w, int h,
+            byte[] buffer) throws FormatException, IOException {
+        return reader.openBytes(0, buffer, x, y, w, h);
+    }
+
     /*
      * Helper methods
      */
