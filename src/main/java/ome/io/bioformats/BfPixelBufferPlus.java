@@ -27,11 +27,15 @@ public class BfPixelBufferPlus extends BfPixelBuffer {
         rgbInterleavedReader = bfReader;
     }
 
-    public byte[] getInterleavedTile(int x, int y, int w, int h) throws FormatException, IOException {
+    public byte[] getInterleavedTile(int x, int y, int w, int h) throws IOException {
         int c = getSizeC() / bfReader.getEffectiveSizeC();
-        c = 3;
-        byte[] buf = new byte[w * h * FormatTools.getBytesPerPixel(reader().getPixelsType()) * c];
-        return rgbInterleavedReader.openBytes(0, buf, x, y, w, h);
+        c = 3; //TODO: Can this ever be something else?
+        try {
+            byte[] buf = new byte[w * h * FormatTools.getBytesPerPixel(reader().getPixelsType()) * c];
+            return rgbInterleavedReader.openBytes(0, buf, x, y, w, h);
+        } catch (FormatException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -135,7 +135,7 @@ public class RGBInterleavedReader extends ReaderWrapper {
     /* @see IFormatReader#openBytes(int, byte[], int, int, int, int) */
     @Override
     public byte[] openBytes(int no, byte[] buf, int x, int y, int w, int h)
-      throws FormatException, IOException
+      throws IOException, FormatException
     {
       FormatTools.assertId(getCurrentFile(), true, 2);
       FormatTools.checkPlaneNumber(this, no);
