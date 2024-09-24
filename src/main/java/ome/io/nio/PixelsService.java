@@ -909,6 +909,36 @@ public class PixelsService extends AbstractFileSystemService
     }
 
     /**
+     * Checks if a Pixels object is RGB according to Bioformats isRGB()
+     * @param pixels The Pixels object
+     * @return See above
+     */
+    public boolean isRGB(final Pixels pixels) {
+        String originalFilePath = getOriginalFilePath(pixels);
+        return isRGB(originalFilePath);
+    }
+
+    /**
+     * Checks if an image at filePath object is RGB according to Bioformats isRGB()
+     * @param filePath The path to the image
+     * @return See above
+     */
+    private boolean isRGB(final String filePath) {
+        try
+        {
+            IFormatReader reader = createBfReader();
+            BfPixelBuffer pixelBuffer = new BfPixelBuffer(filePath, reader);
+            return pixelBuffer.isRGB();
+        }
+        catch (Exception e)
+        {
+            String msg = "Error instantiating pixel buffer: " + filePath;
+            log.error(msg, e);
+            throw new ResourceError(msg);
+        }
+    }
+
+    /**
      * Helper method to properly log any exceptions raised by Bio-Formats.
      * @param pixels passed to {@link BfPixelBuffer}
      * @param filePath Non-null.
