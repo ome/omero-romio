@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
+import java.nio.file.Files;
 import java.util.List;
 
 import loci.formats.FormatException;
@@ -37,7 +38,6 @@ import ome.xml.model.enums.DimensionOrder;
 import ome.xml.model.enums.EnumerationException;
 import ome.xml.model.primitives.PositiveInteger;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -440,7 +440,7 @@ public class BfPyramidPixelBuffer implements PixelBuffer {
             try {
                 if (writerFile != null) {
                     try {
-                        FileUtils.moveFile(writerFile, readerFile);
+                        Files.move(writerFile.toPath(), readerFile.toPath());
                     } finally {
                         writerFile = null;
                     }
