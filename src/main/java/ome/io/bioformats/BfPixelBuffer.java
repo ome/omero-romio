@@ -115,6 +115,17 @@ public class BfPixelBuffer implements PixelBuffer, Serializable {
     }
 
     /**
+     * Delegates to {@link IFormatReader#isRGB(()}.
+     * @return See above.
+     */
+    public boolean isRGB()
+    {
+        // Ensure the reader has been initialized
+        reader();
+        return bfReader.isRGB();
+    }
+
+    /**
      * Sets the current series in the underlying Bio-Formats reader.
      * @param series The series to set.
      */
