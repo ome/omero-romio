@@ -40,13 +40,14 @@ import ome.model.core.Pixels;
 import ome.model.stats.StatsInfo;
 import ome.util.PixelData;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
+
+import com.google.common.io.Files;
 
 /**
  * @author <br>
@@ -504,7 +505,7 @@ public class PixelsService extends AbstractFileSystemService
                     try
                     {
                         pixelsPyramidFile.delete();
-                        FileUtils.touch(pixelsPyramidFile); // ticket:5189
+                        Files.touch(pixelsPyramidFile); // ticket:5189
                     }
                     catch (Exception e2)
                     {

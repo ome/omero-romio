@@ -6,9 +6,9 @@
  */
 package ome.io.nio.utests;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.file.Paths;
 import java.util.List;
 
 import loci.formats.FormatTools;
@@ -24,7 +24,7 @@ import ome.util.checksum.ChecksumProviderFactory;
 import ome.util.checksum.ChecksumProviderFactoryImpl;
 import ome.util.checksum.ChecksumType;
 
-import org.apache.commons.io.FileUtils;
+import com.google.common.io.MoreFiles;
 
 /**
  * Tests the logic for creating {@link BfPyramidPixelBuffer} instances.
@@ -83,7 +83,7 @@ public abstract class AbstractPyramidPixelBufferUnitTest {
     }
 
     protected void deleteRoot() throws IOException {
-        FileUtils.deleteDirectory(new File(root));
+        MoreFiles.deleteRecursively(Paths.get(root));
     }
 
     protected short writeTiles(final List<String> hashDigests) throws FailedTileLoopException {
