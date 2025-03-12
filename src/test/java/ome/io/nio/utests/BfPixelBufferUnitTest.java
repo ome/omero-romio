@@ -5,8 +5,8 @@
 package ome.io.nio.utests;
 
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import ome.io.nio.PixelBuffer;
 import ome.io.nio.PixelsService;
@@ -14,11 +14,12 @@ import ome.io.nio.RomioPixelBuffer;
 import ome.model.core.Pixels;
 import ome.model.enums.PixelsType;
 
-import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import com.google.common.io.MoreFiles;
 
 /**
  * Tests the logic for creating {@link BfPixelBuffer} instances.
@@ -64,7 +65,7 @@ public class BfPixelBufferUnitTest {
 
     @AfterClass
     public void tearDown() throws IOException {
-        FileUtils.deleteDirectory(new File(root));
+        MoreFiles.deleteRecursively(Paths.get(root));
     }
 
     @Test

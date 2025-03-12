@@ -6,19 +6,20 @@ package ome.io.nio.utests;
 
 
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import ome.io.nio.PixelBuffer;
 import ome.io.nio.PixelsService;
 import ome.model.core.Pixels;
 import ome.model.enums.PixelsType;
 
-import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.google.common.io.MoreFiles;
 
 public class PixelServiceCreatesDirectoryUnitTest {
     private Pixels pixels;
@@ -30,7 +31,7 @@ public class PixelServiceCreatesDirectoryUnitTest {
 
     @AfterClass
     public void tearDown() throws IOException {
-        FileUtils.deleteDirectory(new File(ROOT));
+        MoreFiles.deleteRecursively(Paths.get(ROOT));
     }
 
     @BeforeMethod
