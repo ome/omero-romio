@@ -1,3 +1,9 @@
+5.8.2 (March 2025)
+------------------
+
+- Specify Java target using release flag ((#46)[https://github.com/ome/omero-romio/pull/46])
+- Bump omero-common version to 5.7.2
+
 5.8.1 (March 2025)
 ------------------
 
